@@ -7,38 +7,38 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class main extends AppCompatActivity {
+public class Checklist_screen extends AppCompatActivity {
+
     TextView usernameTextView;
     String userPasson;
-
-
+    int NFC_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_checklist_screen);
 
+        // Get the username from previous activity
         if (getIntent().hasExtra("com.aditya.takeoff.USER_ID")) {
-            usernameTextView = (TextView)findViewById(R.id.username);
+            usernameTextView = (TextView)findViewById(R.id.usernameTextView);
             userPasson = getIntent().getExtras().getString("com.aditya.takeoff.USER_ID");
             usernameTextView.setText(userPasson);
+        }
 
+        // Get the NFC tag ID from previous activity
+        if (getIntent().hasExtra("com.aditya.takeoff.NFC_ID")) {
+            NFC_ID = getIntent().getExtras().getInt("com.aditya.takeoff.NFC_ID", 0);
+            Toast.makeText(this, String.valueOf(NFC_ID), Toast.LENGTH_LONG).show();
         }
     }
 
 
 
-
-    public void scanPart(View view) {
+    public void goCameraScreen(View view) {
         String username = usernameTextView.getText().toString();
-
-        // TODO -> Write code to identify which NFC tag was scanned
-        int NFC_ID = 5;
-        Intent startIntent = new Intent(getApplicationContext(), Checklist_screen.class);
+        Intent startIntent = new Intent(getApplicationContext(), Camera_screen.class);
         startIntent.putExtra("com.aditya.takeoff.USER_ID", username);
         startIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
         startActivity(startIntent);
-
-
     }
 }

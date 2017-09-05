@@ -1,7 +1,9 @@
 package com.aditya.takeoff;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,17 @@ public class Camera_screen extends AppCompatActivity {
             NFC_ID = getIntent().getExtras().getInt("com.aditya.takeoff.NFC_ID", 0);
             Toast.makeText(this, String.valueOf(NFC_ID), Toast.LENGTH_LONG).show();
         }
+    }
+
+
+
+
+    public void goSuubmissionForm(View view) {
+        String username = usernameTextView.getText().toString();
+        Intent startIntent = new Intent(getApplicationContext(), Submission_form.class);
+        startIntent.putExtra("com.aditya.takeoff.USER_ID", username);
+        startIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
+        startActivity(startIntent);
     }
 
     

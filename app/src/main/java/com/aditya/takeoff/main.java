@@ -26,15 +26,12 @@ public class main extends AppCompatActivity {
         }
     }
 
-
-
-
     public void scanPart(View view) {
         String username = usernameTextView.getText().toString();
 
         // TODO -> Write code to identify which NFC tag was scanned
         int NFC_ID = 5;
-        Intent startIntent = new Intent(getApplicationContext(), Checklist_screen.class);
+        Intent startIntent = new Intent(this, Checklist_screen.class);
         startIntent.putExtra("com.aditya.takeoff.USER_ID", username);
         startIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
         startActivity(startIntent);

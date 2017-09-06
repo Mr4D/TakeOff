@@ -1,16 +1,21 @@
 package com.aditya.takeoff;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Camera_screen extends AppCompatActivity {
 
 
+    public static final int CAMERA_REQUEST = 10;
     TextView usernameTextView;
+    ImageView imageDisp;
     String userPasson;
     int NFC_ID;
 
@@ -18,7 +23,7 @@ public class Camera_screen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_screen);
-
+        imageDisp = (ImageView) findViewById(R.id.imageDisp);
 
 
 
@@ -39,7 +44,7 @@ public class Camera_screen extends AppCompatActivity {
 
 
 
-    public void goSuubmissionForm(View view) {
+    public void goSubmissionForm(View view) {
         String username = usernameTextView.getText().toString();
         Intent startIntent = new Intent(getApplicationContext(), Submission_form.class);
         startIntent.putExtra("com.aditya.takeoff.USER_ID", username);
@@ -47,5 +52,33 @@ public class Camera_screen extends AppCompatActivity {
         startActivity(startIntent);
     }
 
-    
+
+    public void takeImage(View view) {
+        // This method is called when the image view it clicked
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {  // Did the user choose ok? If yes excute the following
+
+            if (requestCode == CAMERA_REQUEST) {    // We are hearing back from the camera
+                Bitmap cameraImage = (Bitmap) data.getExtras().get("data");
+                // At this point, we have the image from the camera
+
+                imageDisp.setImageBitmap(cameraImage);
+
+
+
+            }
+
+        }
+
+
+    }
 }

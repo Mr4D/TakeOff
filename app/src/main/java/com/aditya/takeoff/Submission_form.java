@@ -17,6 +17,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+
+
+
 public class Submission_form extends AppCompatActivity {
 
     Button submitBt;
@@ -42,8 +46,8 @@ public class Submission_form extends AppCompatActivity {
 
                 longitude = location.getLongitude();
                 latitude = location.getLatitude();
-                Toast.makeText(getApplicationContext(), "Longitude: " + longitude + ", Latitude: " + latitude, Toast.LENGTH_LONG).show();
-
+                //Toast.makeText(getApplicationContext(), "Longitude: " + longitude + ", Latitude: " + latitude, Toast.LENGTH_LONG).show();
+                locationTextView.setText("Longitude: " + longitude + ", Latitude: " + latitude);
             }
 
             @Override
@@ -105,7 +109,7 @@ public class Submission_form extends AppCompatActivity {
 
     public void submitTasks(View view) {
 
-        Toast.makeText(getApplicationContext(), "Longitude: " + longitude + ", Latitude: " + latitude, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Longitude: " + longitude + ", Latitude: " + latitude, Toast.LENGTH_LONG).show();
 
 
 

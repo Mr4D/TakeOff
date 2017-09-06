@@ -23,10 +23,11 @@ public class TakeOff extends AppCompatActivity {
         passwordText = (EditText)findViewById(R.id.password);
     }
 
+
     public void login(View view) {
         String username = usernameText.getText().toString();
         if (!username.isEmpty()) {
-            Intent startIntent = new Intent(getApplicationContext(), main.class);
+            Intent startIntent = new Intent(this, main.class);
             startIntent.putExtra("com.aditya.takeoff.USER_ID", username);
             startActivity(startIntent);
         }

@@ -36,11 +36,12 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageDisp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="8dp"
             android:layout_weight="0.5"
+            android:onClick="takeImage"
             app:srcCompat="@android:drawable/ic_menu_camera" />
 
         <Button
@@ -48,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:onClick="goSuubmissionForm"
+            android:onClick="goSubmissionForm"
             android:text="Continue" />
 
 

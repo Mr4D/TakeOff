@@ -67,9 +67,7 @@ public class Submission_form extends AppCompatActivity {
           });
     }
 
-
     protected void createLocationRequest () {
-
 
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -77,11 +75,6 @@ public class Submission_form extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         }
-
-
-
-
-
 
 
         FusedLocationProviderClient mFusedLocationProviderClient;
@@ -99,7 +92,6 @@ public class Submission_form extends AppCompatActivity {
                         latitude = location.getLatitude();
                         String locationMsg = "Latitude: " + latitude + "\n " + "Longitude: " + longitude;
                         locationTextView.setText(locationMsg);
-
                         // TODO -> If ran successfully till here pass this data into a database and use intent to go to the main.class.
                     }
                 }

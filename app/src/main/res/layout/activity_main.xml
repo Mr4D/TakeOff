@@ -48,14 +48,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Scan a part to retrive checklist" />
+            android:hint="Scan a part to retrive checklist." />
 
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:onClick="scanPart"
             android:text="Emulate scanning of part" />
 
     </LinearLayout>

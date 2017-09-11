@@ -47,18 +47,16 @@ public class main extends AppCompatActivity {
         }
     }
 
-    public void scanPart(View view) {
-        String username = usernameTextView.getText().toString();
-
-        // TODO -> Write code to identify which NFC tag was scanned
-        int NFC_ID = 5;
-        Intent startIntent = new Intent(this, Checklist_screen.class);
-        startIntent.putExtra("com.aditya.takeoff.USER_ID", username);
-        startIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
-        startActivity(startIntent);
-
-
-    }
+//    public void scanPart(View view) {
+//        String username = usernameTextView.getText().toString();
+//
+//        // TODO -> Write code to identify which NFC tag was scanned
+//        int NFC_ID = 5;
+//        Intent startIntent = new Intent(this, Checklist_screen.class);
+//        startIntent.putExtra("com.aditya.takeoff.USER_ID", username);
+//        startIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
+//        startActivity(startIntent);
+//    }
 
 
     @Override
@@ -79,8 +77,18 @@ public class main extends AppCompatActivity {
         NdefRecord[] ndefRecords = ndefMessage.getRecords();
         if (ndefRecords != null && ndefRecords.length > 0) {
             NdefRecord ndefRecord = ndefRecords[0];
-            String tagContent = getTextFromNdefRecord(ndefRecord);
-            Toast.makeText(this, tagContent, Toast.LENGTH_SHORT).show();
+            String NFC_ID = getTextFromNdefRecord(ndefRecord);
+
+//            Toast.makeText(this, tagContent, Toast.LENGTH_SHORT).show();
+
+            String username = usernameTextView.getText().toString();
+            Intent startIntent = new Intent(this, Checklist_screen.class);
+            startIntent.putExtra("com.aditya.takeogg.USER_ID", username);
+            startIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
+            startActivity(startIntent);
+
+
+
         }
         else {
             Toast.makeText(this, "No NDEF records found", Toast.LENGTH_SHORT).show();

@@ -11,7 +11,7 @@ public class Checklist_screen extends AppCompatActivity {
 
     TextView usernameTextView;
     String userPasson;
-    int NFC_ID;
+    String NFC_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class Checklist_screen extends AppCompatActivity {
 
         // Get the NFC tag ID from previous activity
         if (getIntent().hasExtra("com.aditya.takeoff.NFC_ID")) {
-            NFC_ID = getIntent().getExtras().getInt("com.aditya.takeoff.NFC_ID", 0);
+            NFC_ID = getIntent().getExtras().getString("com.aditya.takeoff.NFC_ID");
             Toast.makeText(this, String.valueOf(NFC_ID), Toast.LENGTH_LONG).show();
         }
     }

@@ -34,7 +34,7 @@ public class main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (getIntent().hasExtra("com.aditya.takeoff.USER_ID")) {
-            usernameTextView = (TextView)findViewById(R.id.username);
+            usernameTextView = (TextView)findViewById(R.id.usernameTextView);
             userPasson = getIntent().getExtras().getString("com.aditya.takeoff.USER_ID");
             usernameTextView.setText(userPasson);
 
@@ -78,17 +78,15 @@ public class main extends AppCompatActivity {
         if (ndefRecords != null && ndefRecords.length > 0) {
             NdefRecord ndefRecord = ndefRecords[0];
             String NFC_ID = getTextFromNdefRecord(ndefRecord);
-
 //            Toast.makeText(this, tagContent, Toast.LENGTH_SHORT).show();
 
+
+            // Setting up intent to go the the next activity -->>
             String username = usernameTextView.getText().toString();
             Intent startIntent = new Intent(this, Checklist_screen.class);
-            startIntent.putExtra("com.aditya.takeogg.USER_ID", username);
+            startIntent.putExtra("com.aditya.takeoff.USER_ID", username);
             startIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
             startActivity(startIntent);
-
-
-
         }
         else {
             Toast.makeText(this, "No NDEF records found", Toast.LENGTH_SHORT).show();

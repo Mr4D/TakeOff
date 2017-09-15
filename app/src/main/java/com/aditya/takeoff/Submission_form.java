@@ -4,9 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -29,8 +27,12 @@ public class Submission_form extends AppCompatActivity {
 
     Button submitBt;
     LocationManager locationManager;
-    LocationListener locationListener;
     TextView locationTextView;
+    TextView usernameTextView;
+
+    // Storing intents pass on info
+    String userPasson;
+    String NFC_ID;
 
     // Will be used later for
     Double longitude;
@@ -44,6 +46,18 @@ public class Submission_form extends AppCompatActivity {
         submitBt = (Button)findViewById(R.id.submitBt);
         locationTextView = (TextView)findViewById(R.id.locationTextView);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        // Get the username from previous activity
+        if (getIntent().hasExtra("com.aditya.takeoff.USER_ID")) {
+            usernameTextView = (TextView)findViewById(R.id.usernameTextView);
+            userPasson = getIntent().getExtras().getString("com.aditya.takeoff.USER_ID");
+            usernameTextView.setText(userPasson);
+        }
+        // Get the NFC tag ID from previous activity
+        if (getIntent().hasExtra("com.aditya.takeoff.NFC_ID")) {
+            NFC_ID = getIntent().getExtras().getString("com.aditya.takeoff.NFC_ID");
+            Toast.makeText(this, String.valueOf(NFC_ID), Toast.LENGTH_LONG).show();
+        }
 
         configureButton();
     }

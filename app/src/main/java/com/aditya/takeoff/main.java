@@ -41,22 +41,12 @@ public class main extends AppCompatActivity {
         }
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
         if (!(nfcAdapter != null && nfcAdapter.isEnabled())) {
             Toast.makeText(this, "Please turn on NFC from settings and launch the application again!", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
-
-//    public void scanPart(View view) {
-//        String username = usernameTextView.getText().toString();
-//
-//        // TODO -> Write code to identify which NFC tag was scanned
-//        int NFC_ID = 5;
-//        Intent startIntent = new Intent(this, Checklist_screen.class);
-//        startIntent.putExtra("com.aditya.takeoff.USER_ID", username);
-//        startIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
-//        startActivity(startIntent);
-//    }
 
 
     @Override
@@ -124,6 +114,7 @@ public class main extends AppCompatActivity {
             int languageSize = payload[0] & 0063;
             tagContent = new String(payload, languageSize + 1, payload.length - languageSize - 1, textEncoding);
         }
+
         catch (UnsupportedEncodingException e) {
             Log.e("getTextFromNdefRecord", e.getMessage(), e);
         }

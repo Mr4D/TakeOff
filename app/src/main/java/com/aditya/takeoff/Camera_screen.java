@@ -33,7 +33,7 @@ public class Camera_screen extends AppCompatActivity {
 
     TextView usernameTextView;
     ImageView imageDisp;
-    String userPasson;
+    String usernamePassOn;
     String NFC_ID;
     String imgPath;
 
@@ -67,8 +67,8 @@ public class Camera_screen extends AppCompatActivity {
 
         if (getIntent().hasExtra("com.aditya.takeoff.USER_ID")) { // Get the username from previous activity
             usernameTextView = (TextView)findViewById(R.id.usernameTextView);
-            userPasson = getIntent().getExtras().getString("com.aditya.takeoff.USER_ID");
-            usernameTextView.setText(userPasson);
+            usernamePassOn = getIntent().getExtras().getString("com.aditya.takeoff.USER_ID");
+            usernameTextView.setText(usernamePassOn);
         }
 
         if (getIntent().hasExtra("com.aditya.takeoff.NFC_ID")) { // Get the NFC tag ID from previous activity
@@ -123,7 +123,7 @@ public class Camera_screen extends AppCompatActivity {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg",storageDir);
         // Save a file: path for use with ACTION_VIEW intents
         imgPath = image.getAbsolutePath();
@@ -132,7 +132,7 @@ public class Camera_screen extends AppCompatActivity {
 
     public void goSubmissionForm(View view) {
         Intent startIntent = new Intent(getApplicationContext(), Submission_form.class);
-        startIntent.putExtra("com.aditya.takeoff.USER_ID", userPasson);
+        startIntent.putExtra("com.aditya.takeoff.USER_ID", usernamePassOn);
         startIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
         startActivity(startIntent);
     }

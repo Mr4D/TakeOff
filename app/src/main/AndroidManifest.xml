@@ -2,23 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aditya.takeoff">
 
-    <!--For camera-->
+    <!-- For camera -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <!--For location-->
+    <!-- For location -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!--For NFC functions-->
-    <uses-permission android:name="android.permission.NFC"/>
+    <!-- For NFC functions -->
+    <uses-permission android:name="android.permission.NFC" />
+
     <uses-feature
         android:name="android.hardware.nfc"
-        android:required="true"/>
-
-
-
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -36,6 +34,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_path" />
         </provider>
+
         <activity android:name=".TakeOff">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,7 +45,8 @@
         <activity android:name=".main" />
         <activity android:name=".Checklist_screen" />
         <activity android:name=".Camera_screen" />
-        <activity android:name=".Submission_form"></activity>
+        <activity android:name=".Submission_form" />
+        <activity android:name=".History"></activity>
     </application>
 
 </manifest>

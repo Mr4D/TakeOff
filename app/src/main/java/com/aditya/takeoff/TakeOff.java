@@ -13,9 +13,6 @@ public class TakeOff extends AppCompatActivity {
     Button loginBtn;
     EditText usernameText;
     EditText passwordText;
-//    TextView dbdisp;        // Dogfood
-
-//    MyDBHandler dbHandler;  // Dogfood
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +21,6 @@ public class TakeOff extends AppCompatActivity {
         loginBtn = (Button)findViewById(R.id.btLogin);
         usernameText = (EditText)findViewById(R.id.username);
         passwordText = (EditText)findViewById(R.id.password);
-//        dbdisp = (TextView)findViewById(R.id.dbdisp);           // Dogfood
-//        dbHandler = new MyDBHandler(this, null, null, 1);       // Dogfood
     }
 
     public void login(View view) {
@@ -39,25 +34,4 @@ public class TakeOff extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please enter a username.", Toast.LENGTH_LONG).show();
         }
     }
-
-
-//    public void login(View view) {  //Dogfood
-//        // Add tasks to database
-//        Log.d("dbdebug", "In onclick now");
-//        String task = usernameText.getText().toString();
-//        Log.d("dbdebug", task);
-//        dbHandler.addTask(task);
-//        printDatabase();
-//    }
-
-
-
-//    public void printDatabase() {   //Dogfood
-//        String dbString = dbHandler.databaseToString();
-//        dbdisp.setText(dbString);
-//        usernameText.setText("");
-//    }
-
-
-
 }

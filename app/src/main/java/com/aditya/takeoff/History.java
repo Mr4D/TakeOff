@@ -46,16 +46,14 @@ public class History extends AppCompatActivity {
             }
         });
 
-        dbHandler.addTask("Entry 1");
-        printDatabase();
-
+//        printDatabase();
     }
 
 
 
-    public void printDatabase() {   //Dogfood
-        String dbString = dbHandler.databaseToString();
-        textView2.setText(dbString);
-    }
+//    public void printDatabase() {   //Dogfood
+//        String dbString = dbHandler.databaseToString();
+//        textView2.setText(dbString);
+//    }
 
 }

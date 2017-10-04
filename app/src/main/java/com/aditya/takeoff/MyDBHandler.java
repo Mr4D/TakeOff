@@ -66,7 +66,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                     COLUMN_JOBS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT " + ", " +
                     COLUMN_JOBS_USERNAME + " TEXT " + ", " +
                     COLUMN_JOBS_TASKS_ID + " INTEGER " + ", " +
-                    COLUMN_JOBS_TIMESTAMP + " TIMESTAMP " + ", " +
+                    COLUMN_JOBS_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP " + ", " +
                     COLUMN_JOBS_LONGITUTE + " DECIMAL(12,9) " + ", " +
                     COLUMN_JOBS_LATITUDE + " DECIMAL(12,9) " + ", " +
                     COLUMN_JOBS_DESCRIPTION + " TEXT " + ", " +
@@ -87,42 +87,71 @@ public class MyDBHandler extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-//    public String databaseToString() {
-//        String dbString = "";
-//        SQLiteDatabase db = getWritableDatabase();
-//        String query = "SELECT * FROM " + TABLE_TASKS + ";";
-//        Cursor c = db.rawQuery(query, null);
-//        c.moveToFirst();
-//        while(!c.isAfterLast()) {
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_ID));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_PARTNAME));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK0));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK1));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK2));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK3));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK4));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK5));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK6));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK7));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK8));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK9));
-//            dbString += "\n";
-//            dbString += "\n";
-//            dbString += "\n";
-//            c.moveToNext();
-//        }
-//        db.close();
-//        return dbString;
-//    }
+    public String[] getCheckList(String nfc_id) {
+        String[] checks = new String[11 ];
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_TASKS +
+                            " WHERE " + COLUMN_TASKS_ID + " = " + nfc_id + ";";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        checks[0] = c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK0));
+        checks[1] = c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK1));
+        checks[2] = c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK2));
+        checks[3] = c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK3));
+        checks[4] = c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK4));
+        checks[5] = c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK5));
+        checks[6] = c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK6));
+        checks[7] = c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK7));
+        checks[8] = c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK8));
+        checks[9] = c.getString(c.getColumnIndex(COLUMN_TASKS_CHECK9));
+        checks[10] = c.getString(c.getColumnIndex(COLUMN_TASKS_PARTNAME));
+        return checks;
+    }
+
+    public void submitJob(String username, String nfcId, double longitude, double latitude, String description, String alert, String imgUri) {
+        ContentValues job = new ContentValues();
+        job.put(COLUMN_JOBS_USERNAME, username);
+        job.put(COLUMN_JOBS_TASKS_ID, nfcId);
+        job.put(COLUMN_JOBS_LONGITUTE, longitude);
+        job.put(COLUMN_JOBS_LATITUDE, latitude);
+        job.put(COLUMN_JOBS_DESCRIPTION, description);
+        job.put(COLUMN_JOBS_ALERT, alert);
+        job.put(COLUMN_JOBS_IMAGEURI, imgUri);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_JOBS, null, job);
+        db.close();
+    }
+
+    public String databaseToString() {
+        String dbString = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_JOBS + ";";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()) {
+            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_ID));
+            dbString += "\n";
+            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_USERNAME));
+            dbString += "\n";
+            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_TASKS_ID));
+            dbString += "\n";
+            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_TIMESTAMP));
+            dbString += "\n";
+            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_LONGITUTE));
+            dbString += "\n";
+            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_LATITUDE));
+            dbString += "\n";
+            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_DESCRIPTION));
+            dbString += "\n";
+            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_ALERT));
+            dbString += "\n";
+            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_IMAGEURI));
+            dbString += "\n";
+            dbString += "\n";
+            dbString += "\n";
+            c.moveToNext();
+        }
+        db.close();
+        return dbString;
+    }
 }

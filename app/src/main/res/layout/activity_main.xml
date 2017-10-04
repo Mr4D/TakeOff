@@ -61,6 +61,16 @@
             app:menu="@menu/bottom_navigation_menu" />
     </RelativeLayout>
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/partName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="132dp"
+        android:onClick="continueClick"
+        android:text="Button" />
+
 
     <!--<android.support.design.widget.AppBarLayout-->
         <!--android:id="@+id/nav_bar"-->

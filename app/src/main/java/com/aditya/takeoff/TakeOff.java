@@ -26,9 +26,9 @@ public class TakeOff extends AppCompatActivity {
     public void login(View view) {
         String username = usernameText.getText().toString();
         if (!username.isEmpty()) {
-            Intent startIntent = new Intent(this, main.class);
-            startIntent.putExtra("com.aditya.takeoff.USER_ID", username);
-            startActivity(startIntent);
+            Intent mainIntent = new Intent(this, main.class);
+            mainIntent.putExtra("com.aditya.takeoff.USER_ID", username);
+            startActivity(mainIntent);
         }
         else {
             Toast.makeText(getApplicationContext(), "Please enter a username.", Toast.LENGTH_LONG).show();

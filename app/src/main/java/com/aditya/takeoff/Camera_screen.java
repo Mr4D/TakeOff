@@ -39,6 +39,9 @@ public class Camera_screen extends AppCompatActivity {
 
     Boolean permissionStatus;
 
+    // To store location of image
+    Uri contentUri;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void startCameraIntent() {
         Intent callCameraApplicationIntent = new Intent();
@@ -104,7 +107,7 @@ public class Camera_screen extends AppCompatActivity {
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             File f = new File(imgPath);
-            Uri contentUri = Uri.fromFile(f);
+            contentUri = Uri.fromFile(f);
             Toast.makeText(this, contentUri.toString(), Toast.LENGTH_LONG).show();
             mediaScanIntent.setData(contentUri);
             this.sendBroadcast(mediaScanIntent);
@@ -131,9 +134,11 @@ public class Camera_screen extends AppCompatActivity {
     }
 
     public void goSubmissionForm(View view) {
-        Intent startIntent = new Intent(getApplicationContext(), Submission_form.class);
-        startIntent.putExtra("com.aditya.takeoff.USER_ID", usernamePassOn);
-        startIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
-        startActivity(startIntent);
+        Intent submission = new Intent(getApplicationContext(), Submission_form.class);
+        submission.putExtra("com.aditya.takeoff.USER_ID", usernamePassOn);
+        submission.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
+        String imgUri = contentUri.toString();
+        submission.putExtra("com.aditya.takeoff.IMG_URI", imgUri);
+        startActivity(submission);
     }
 }

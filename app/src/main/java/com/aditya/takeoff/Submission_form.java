@@ -11,18 +11,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-
-
 
 public class Submission_form extends AppCompatActivity {
 
@@ -66,15 +60,12 @@ public class Submission_form extends AppCompatActivity {
         // Get the NFC tag ID from previous activity
         if (getIntent().hasExtra("com.aditya.takeoff.NFC_ID")) {
             NFC_ID = getIntent().getExtras().getString("com.aditya.takeoff.NFC_ID");
-//            Toast.makeText(this, String.valueOf(NFC_ID), Toast.LENGTH_LONG).show();
         }
         if (getIntent().hasExtra("com.aditya.takeoff.IMG_URI")) {
             imgUri = getIntent().getExtras().getString("com.aditya.takeoff.IMG_URI");
-            Toast.makeText(this, String.valueOf(imgUri), Toast.LENGTH_LONG).show();
         }
         createLocationRequest ();
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -86,7 +77,6 @@ public class Submission_form extends AppCompatActivity {
         }
     }
 
-
     protected void createLocationRequest () {
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -97,7 +87,6 @@ public class Submission_form extends AppCompatActivity {
         FusedLocationProviderClient mFusedLocationProviderClient;
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
             return;
         }
         else {
@@ -115,38 +104,15 @@ public class Submission_form extends AppCompatActivity {
         }
     }
 
-
     public void submitTasks(View view) {
        // Get all data and store in database
         description = descriptionBox.getText().toString();
         alert = alertBox.getText().toString();
-
         dbHandler.submitJob(userPasson, NFC_ID, longitude, latitude, description, alert, imgUri);
         Intent back = new Intent(getApplicationContext(), main.class);
         back.putExtra("com.aditya.takeoff.USER_ID", userPasson);
         back.putExtra("com.aditya.takeoff.BACK", "Returned");
         startActivity(back);
+        finish();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //    private void configureButton() {
-//        submitBt.setOnClickListener(new View.OnClickListener() {
-//              @Override
-//              public void onClick(View view) {
-//                  createLocationRequest();
-//              }
-//          });
-//    }
-
 }

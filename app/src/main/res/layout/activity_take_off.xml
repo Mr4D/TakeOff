@@ -7,8 +7,6 @@
     android:orientation="vertical"
     android:padding="20dp"
     tools:context="com.aditya.takeoff.TakeOff">
-
-
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
@@ -17,7 +15,6 @@
         android:hint="@string/username"
         android:inputType="textPersonName"
         android:padding="20dp" />
-
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
@@ -26,7 +23,6 @@
         android:hint="@string/pass"
         android:inputType="textPassword"
         android:padding="20dp" />
-
     <Button
         android:id="@+id/btLogin"
         android:layout_width="match_parent"
@@ -34,5 +30,4 @@
         android:onClick="login"
         android:padding="20dp"
         android:text="@string/login" />
-
 </LinearLayout>

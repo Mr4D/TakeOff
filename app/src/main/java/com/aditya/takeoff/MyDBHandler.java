@@ -122,66 +122,62 @@ public class MyDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
-    public String databaseToString() {
-        String dbString = "";
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_JOBS + ";";
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-        while(!c.isAfterLast()) {
-            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_ID));
-            dbString += "\n";
-            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_USERNAME));
-            dbString += "\n";
-            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_TASKS_ID));
-            dbString += "\n";
-            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_TIMESTAMP));
-            dbString += "\n";
-            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_LONGITUTE));
-            dbString += "\n";
-            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_LATITUDE));
-            dbString += "\n";
-            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_DESCRIPTION));
-            dbString += "\n";
-            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_ALERT));
-            dbString += "\n";
-            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_IMAGEURI));
-            dbString += "\n";
-            dbString += "\n";
-            dbString += "\n";
-            c.moveToNext();
-        }
-        db.close();
-        return dbString;
-    }
-
-
-
-    public String getDateTime() {
-        String dateStr = "";
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT DATE(" + COLUMN_JOBS_TIMESTAMP + ") AS date, TIME(" + COLUMN_JOBS_TIMESTAMP +") AS time FROM " + TABLE_JOBS + ";";
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-        while(!c.isAfterLast()) {
-            dateStr += "Date: ";
-            dateStr += c.getString(c.getColumnIndex("date"));
-            dateStr += "\n";
-            dateStr += "Time: ";
-            dateStr += c.getString(c.getColumnIndex("time"));
-            dateStr += "\n";
-            dateStr += "\n";
-            c.moveToNext();
-        }
-        db.close();
-        return dateStr;
-    }
-
-
-
     public Cursor getListContents() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLE_JOBS, null);
         return data;
     }
+
+//    public String databaseToString() {
+//        String dbString = "";
+//        SQLiteDatabase db = getWritableDatabase();
+//        String query = "SELECT * FROM " + TABLE_JOBS + ";";
+//        Cursor c = db.rawQuery(query, null);
+//        c.moveToFirst();
+//        while(!c.isAfterLast()) {
+//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_ID));
+//            dbString += "\n";
+//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_USERNAME));
+//            dbString += "\n";
+//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_TASKS_ID));
+//            dbString += "\n";
+//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_TIMESTAMP));
+//            dbString += "\n";
+//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_LONGITUTE));
+//            dbString += "\n";
+//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_LATITUDE));
+//            dbString += "\n";
+//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_DESCRIPTION));
+//            dbString += "\n";
+//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_ALERT));
+//            dbString += "\n";
+//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_IMAGEURI));
+//            dbString += "\n";
+//            dbString += "\n";
+//            dbString += "\n";
+//            c.moveToNext();
+//        }
+//        db.close();
+//        return dbString;
+//    }
+
+//    public String getDateTime() {
+//        String dateStr = "";
+//        SQLiteDatabase db = getWritableDatabase();
+//        String query = "SELECT DATE(" + COLUMN_JOBS_TIMESTAMP + ") AS date, TIME(" + COLUMN_JOBS_TIMESTAMP +") AS time FROM " + TABLE_JOBS + ";";
+//        Cursor c = db.rawQuery(query, null);
+//        c.moveToFirst();
+//        while(!c.isAfterLast()) {
+//            dateStr += "Date: ";
+//            dateStr += c.getString(c.getColumnIndex("date"));
+//            dateStr += "\n";
+//            dateStr += "Time: ";
+//            dateStr += c.getString(c.getColumnIndex("time"));
+//            dateStr += "\n";
+//            dateStr += "\n";
+//            c.moveToNext();
+//        }
+//        db.close();
+//        return dateStr;
+//    }
 }

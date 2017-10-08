@@ -24,6 +24,7 @@ public class main extends AppCompatActivity {
     TextView usernameTextView;
     String userPasson;
     NfcAdapter nfcAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,7 @@ public class main extends AppCompatActivity {
             finish();
         }
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -79,6 +81,7 @@ public class main extends AppCompatActivity {
             }
         }
     }
+
     private void readTextFromMessage(NdefMessage ndefMessage) {
         NdefRecord[] ndefRecords = ndefMessage.getRecords();
         if (ndefRecords != null && ndefRecords.length > 0) {
@@ -94,25 +97,30 @@ public class main extends AppCompatActivity {
             Toast.makeText(this, "No NDEF records found", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         enableForegroundDispatchSystem();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         disableForegroundDispatchSystem();
     }
+
     private void enableForegroundDispatchSystem() {
         Intent intent = new Intent(this, main.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         IntentFilter[] intentilter = new IntentFilter[]{};
         nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentilter, null);
     }
+
     private void disableForegroundDispatchSystem() {
         nfcAdapter.disableForegroundDispatch(this);
     }
+
     public String getTextFromNdefRecord(NdefRecord ndefRecord) {
         String tagContent = null;
         try {
@@ -136,8 +144,3 @@ public class main extends AppCompatActivity {
         startActivity(checklistIntent);
     }
 }
-
-/*
-    TODO -> Tyler's suggestions:
-        Consider the ability to move between activities in both directions.
-*/

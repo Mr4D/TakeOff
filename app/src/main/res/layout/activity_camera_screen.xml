@@ -6,35 +6,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.aditya.takeoff.main">
-
     <LinearLayout
         android:id="@+id/main_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <LinearLayout
             android:id="@+id/head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:text="Logged in as: " />
-
             <TextView
                 android:id="@+id/usernameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:text="@string/username" />
-
         </LinearLayout>
-
         <ImageView
             android:id="@+id/imageDisp"
             android:layout_width="match_parent"
@@ -42,7 +36,6 @@
             android:layout_margin="8dp"
             android:layout_weight="0.5"
             app:srcCompat="@android:drawable/ic_menu_camera" />
-
         <Button
             android:id="@+id/continue2"
             android:layout_width="match_parent"
@@ -50,9 +43,5 @@
             android:layout_margin="8dp"
             android:onClick="goSubmissionForm"
             android:text="Continue" />
-
-
     </LinearLayout>
-
-
 </LinearLayout>

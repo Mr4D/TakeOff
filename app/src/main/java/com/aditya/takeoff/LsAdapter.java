@@ -1,6 +1,5 @@
 package com.aditya.takeoff;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-/**
- * Created by aprab on 8/10/2017.
- */
 
 public class LsAdapter extends ArrayAdapter<Job> {
     private LayoutInflater mInflater;
@@ -24,7 +19,6 @@ public class LsAdapter extends ArrayAdapter<Job> {
         this.jobs = jobs;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mViewResourceId = textViewResourceId;
-
     }
 
     public View getView(int position, View convertView, ViewGroup parents) {
@@ -34,7 +28,6 @@ public class LsAdapter extends ArrayAdapter<Job> {
             TextView username = (TextView) convertView.findViewById(R.id.textUsername);
             TextView task = (TextView) convertView.findViewById(R.id.textTask);
             TextView time = (TextView) convertView.findViewById(R.id.textTime);
-
             if(username != null) {
                 username.setText(job.getUsername().toString());
             }
@@ -45,7 +38,6 @@ public class LsAdapter extends ArrayAdapter<Job> {
                 time.setText(job.getTime().toString());
             }
         }
-
         return convertView;
     }
 

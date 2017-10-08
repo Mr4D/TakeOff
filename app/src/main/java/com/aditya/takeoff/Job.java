@@ -1,14 +1,9 @@
 package com.aditya.takeoff;
 
-/**
- * Created by aprab on 8/10/2017.
- */
-
 public class Job {
     private String username;
     private String task;
     private String time;
-
 
     public Job(String cUsername, String cTask, String cTime) {
         username = cUsername;

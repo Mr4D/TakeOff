@@ -54,7 +54,6 @@ public class Checklist_screen extends AppCompatActivity {
         // Get the NFC tag ID from previous activity
         if (getIntent().hasExtra("com.aditya.takeoff.NFC_ID")) {
             NFC_ID = getIntent().getExtras().getString("com.aditya.takeoff.NFC_ID");
-            Toast.makeText(this, NFC_ID, Toast.LENGTH_LONG).show();
         }
         setCheckList();
     }

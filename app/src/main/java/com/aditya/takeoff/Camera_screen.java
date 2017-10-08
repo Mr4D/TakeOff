@@ -79,7 +79,6 @@ public class Camera_screen extends AppCompatActivity {
 
         if (getIntent().hasExtra("com.aditya.takeoff.NFC_ID")) { // Get the NFC tag ID from previous activity
             NFC_ID = getIntent().getExtras().getString("com.aditya.takeoff.NFC_ID");
-            Toast.makeText(this, String.valueOf(NFC_ID), Toast.LENGTH_LONG).show();
         }
 
         imageDisp.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +110,6 @@ public class Camera_screen extends AppCompatActivity {
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             File f = new File(imgPath);
             contentUri = Uri.fromFile(f);
-            Toast.makeText(this, contentUri.toString(), Toast.LENGTH_LONG).show();
             mediaScanIntent.setData(contentUri);
             this.sendBroadcast(mediaScanIntent);
             try {

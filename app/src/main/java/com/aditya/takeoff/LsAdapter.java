@@ -1,6 +1,7 @@
 package com.aditya.takeoff;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +28,16 @@ public class LsAdapter extends ArrayAdapter<Job> {
         if(job !=  null) {
             TextView username = (TextView) convertView.findViewById(R.id.textUsername);
             TextView task = (TextView) convertView.findViewById(R.id.textTask);
+            TextView date = (TextView) convertView.findViewById(R.id.textDate);
             TextView time = (TextView) convertView.findViewById(R.id.textTime);
             if(username != null) {
                 username.setText(job.getUsername().toString());
             }
             if(task != null) {
                 task.setText(job.getTask().toString());
+            }
+            if(date != null) {
+                date.setText(job.getDate().toString());
             }
             if(time != null) {
                 time.setText(job.getTime().toString());

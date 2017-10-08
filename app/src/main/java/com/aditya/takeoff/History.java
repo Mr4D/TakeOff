@@ -1,6 +1,5 @@
 package com.aditya.takeoff;
 
-import android.app.job.JobInfo;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
@@ -9,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,21 +19,17 @@ import java.util.ArrayList;
 public class History extends AppCompatActivity {
     MyDBHandler dbHandler;
     TextView usernameTextView;
-//    TextView dbdump;
     String userPasson;
 
     ArrayList<Job> jobList;
     ListView listView;
     Job job;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         dbHandler = new MyDBHandler(this, null, null, 1);
-
-//        dbdump = (TextView)findViewById(R.id.dbdump);
 
         // Set username
         usernameTextView = (TextView)findViewById(R.id.usernameTextView);
@@ -63,13 +60,6 @@ public class History extends AppCompatActivity {
                 return false;
             }
         });
-//        dbdump.setText(dbHandler.getDateTime());
-
-
-
-
-
-
 
         jobList = new ArrayList<>();
         Cursor data = dbHandler.getListContents();
@@ -78,14 +68,18 @@ public class History extends AppCompatActivity {
             Toast.makeText(this, "There is nothing in this database!", Toast.LENGTH_SHORT).show();
         } else {
             while (data.moveToNext()){
-                job = new Job(data.getString(1), data.getString(2), data.getString(3));
+                job = new Job(data.getString(0), data.getString(1), data.getString(2), data.getString(3));
                 jobList.add(job);
             }
             LsAdapter adapter = new LsAdapter(this, R.layout.list_adapter_view, jobList);
             listView = (ListView) findViewById(R.id.listView);
             listView.setAdapter(adapter);
+//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                }
+//            });
         }
-
-
     }
 }

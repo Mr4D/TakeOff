@@ -30,9 +30,7 @@ public class Camera_screen extends AppCompatActivity {
     //Permission request codes for functions
     private static final int REQUEST_CAMERA_PERMISSION = 6363;
     private static final int REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION = 3939;
-    private static final int REQUEST_INTERNET_PERMISSION = 5656;
     private static final int REQUEST_ACCESS_FINE_LOCATION_PERMISSION = 2145;
-    private static final int REQUEST_ACCESS_COARSE_LOCATION_PERMISSION = 1246;
 
     TextView usernameTextView;
     ImageView imageDisp;

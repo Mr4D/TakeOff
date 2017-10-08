@@ -60,6 +60,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                     COLUMN_TASKS_CHECK9 + " TEXT " +
                 ");";
         db.execSQL(query);
+
         query = "DROP TABLE IF EXISTS " + TABLE_JOBS;
         db.execSQL(query);
         query = "CREATE TABLE " + TABLE_JOBS + " (" +
@@ -75,8 +76,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
                     "FOREIGN KEY (" + COLUMN_JOBS_TASKS_ID + ") REFERENCES " + TABLE_TASKS + "(" + COLUMN_TASKS_ID + ")" +
                 ");";
         db.execSQL(query);
+
         query = "INSERT INTO " + TABLE_TASKS + " VALUES ( 1, \"Flight Deck\", \"Emergency Exit\", \"Equipment\", \"Manuals\", \"Radio navigation charts\", \"Weight and balance sheet\", \"Hand fire extinguishers\", \"Oxygen Supply\", \"Flight controls\", \"Wheel well\", \"Doors and hatches\");";
         db.execSQL(query);
+
         query = "INSERT INTO " + TABLE_TASKS + " VALUES ( 2, \"Nose Gear\", \"Emergency Exit\", \"Equipment\", \"Manuals\", \"Radio navigation charts\", \"Weight and balance sheet\", \"Hand fire extinguishers\", \"Oxygen Supply\", \"Flight controls\", \"Wheel well\", \"Doors and hatches\");";
         db.execSQL(query);
     }
@@ -124,9 +127,27 @@ public class MyDBHandler extends SQLiteOpenHelper{
 
     public Cursor getListContents() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_JOBS, null);
+        String query = "SELECT " +
+                TABLE_JOBS + "." + COLUMN_JOBS_USERNAME + " AS username, " +
+                TABLE_TASKS + "." + COLUMN_TASKS_PARTNAME + " AS task, " +
+                "DATE(" + TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + ") AS date, " +
+                "TIME(" + TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + ") AS time, " +
+                TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + " AS timestamp " +
+                "FROM " +
+                TABLE_JOBS +
+                " INNER JOIN " +
+                TABLE_TASKS +
+                " ON " + TABLE_TASKS + "." + COLUMN_TASKS_ID + " = " +  TABLE_JOBS + "." + COLUMN_JOBS_TASKS_ID +
+                " ORDER BY timestamp DESC";
+        Cursor data = db.rawQuery(query, null);
         return data;
     }
+
+//    public Cursor getListContents() {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_JOBS, null);
+//        return data;
+//    }
 
 //    public String databaseToString() {
 //        String dbString = "";

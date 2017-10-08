@@ -30,6 +30,9 @@ public class Camera_screen extends AppCompatActivity {
     //Permission request codes for functions
     private static final int REQUEST_CAMERA_PERMISSION = 6363;
     private static final int REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION = 3939;
+    private static final int REQUEST_INTERNET_PERMISSION = 5656;
+    private static final int REQUEST_ACCESS_FINE_LOCATION_PERMISSION = 2145;
+    private static final int REQUEST_ACCESS_COARSE_LOCATION_PERMISSION = 1246;
 
     TextView usernameTextView;
     ImageView imageDisp;
@@ -134,11 +137,19 @@ public class Camera_screen extends AppCompatActivity {
     }
 
     public void goSubmissionForm(View view) {
-        Intent submission = new Intent(getApplicationContext(), Submission_form.class);
-        submission.putExtra("com.aditya.takeoff.USER_ID", usernamePassOn);
-        submission.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
-        String imgUri = contentUri.toString();
-        submission.putExtra("com.aditya.takeoff.IMG_URI", imgUri);
-        startActivity(submission);
+        if((ActivityCompat.checkSelfPermission(Camera_screen.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) { // If no camera permission granted, request it
+            ActivityCompat.requestPermissions(Camera_screen.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_ACCESS_FINE_LOCATION_PERMISSION);
+        } else {
+            if (contentUri == null) {
+                Toast.makeText(this, "Please provide an image", Toast.LENGTH_LONG).show();
+            } else {
+                Intent submission = new Intent(getApplicationContext(), Submission_form.class);
+                submission.putExtra("com.aditya.takeoff.USER_ID", usernamePassOn);
+                submission.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
+                String imgUri = contentUri.toString();
+                submission.putExtra("com.aditya.takeoff.IMG_URI", imgUri);
+                startActivity(submission);
+            }
+        }
     }
 }

@@ -1,26 +1,38 @@
 package com.aditya.takeoff;
 
+import android.app.job.JobInfo;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class History extends AppCompatActivity {
     MyDBHandler dbHandler;
     TextView usernameTextView;
-    TextView dbdump;
+//    TextView dbdump;
     String userPasson;
+
+    ArrayList<Job> jobList;
+    ListView listView;
+    Job job;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         dbHandler = new MyDBHandler(this, null, null, 1);
 
-        dbdump = (TextView)findViewById(R.id.dbdump);
+//        dbdump = (TextView)findViewById(R.id.dbdump);
 
         // Set username
         usernameTextView = (TextView)findViewById(R.id.usernameTextView);
@@ -28,6 +40,7 @@ public class History extends AppCompatActivity {
             userPasson = getIntent().getExtras().getString("com.aditya.takeoff.USER_ID");
             usernameTextView.setText(userPasson);
         }
+
         // Navigation bar styling and activity managing
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
@@ -50,6 +63,29 @@ public class History extends AppCompatActivity {
                 return false;
             }
         });
-        dbdump.setText(dbHandler.databaseToString());
+//        dbdump.setText(dbHandler.getDateTime());
+
+
+
+
+
+
+
+        jobList = new ArrayList<>();
+        Cursor data = dbHandler.getListContents();
+        int numRows = data.getCount();
+        if(numRows == 0){
+            Toast.makeText(this, "There is nothing in this database!", Toast.LENGTH_SHORT).show();
+        } else {
+            while (data.moveToNext()){
+                job = new Job(data.getString(1), data.getString(2), data.getString(3));
+                jobList.add(job);
+            }
+            LsAdapter adapter = new LsAdapter(this, R.layout.list_adapter_view, jobList);
+            listView = (ListView) findViewById(R.id.listView);
+            listView.setAdapter(adapter);
+        }
+
+
     }
 }

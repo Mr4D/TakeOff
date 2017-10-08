@@ -66,7 +66,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                     COLUMN_JOBS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT " + ", " +
                     COLUMN_JOBS_USERNAME + " TEXT " + ", " +
                     COLUMN_JOBS_TASKS_ID + " INTEGER " + ", " +
-                    COLUMN_JOBS_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP " + ", " +
+                    COLUMN_JOBS_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP " + ", " +
                     COLUMN_JOBS_LONGITUTE + " DECIMAL(12,9) " + ", " +
                     COLUMN_JOBS_LATITUDE + " DECIMAL(12,9) " + ", " +
                     COLUMN_JOBS_DESCRIPTION + " TEXT " + ", " +
@@ -153,5 +153,35 @@ public class MyDBHandler extends SQLiteOpenHelper{
         }
         db.close();
         return dbString;
+    }
+
+
+
+    public String getDateTime() {
+        String dateStr = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT DATE(" + COLUMN_JOBS_TIMESTAMP + ") AS date, TIME(" + COLUMN_JOBS_TIMESTAMP +") AS time FROM " + TABLE_JOBS + ";";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()) {
+            dateStr += "Date: ";
+            dateStr += c.getString(c.getColumnIndex("date"));
+            dateStr += "\n";
+            dateStr += "Time: ";
+            dateStr += c.getString(c.getColumnIndex("time"));
+            dateStr += "\n";
+            dateStr += "\n";
+            c.moveToNext();
+        }
+        db.close();
+        return dateStr;
+    }
+
+
+
+    public Cursor getListContents() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_JOBS, null);
+        return data;
     }
 }

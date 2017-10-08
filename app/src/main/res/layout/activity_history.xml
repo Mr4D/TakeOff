@@ -33,19 +33,24 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/dbdump"
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginBottom="50dp">-->
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+
+        <!--</ScrollView>-->
+
+        <ListView
+            android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/head"
-            android:layout_margin="20dp"
-            android:layout_weight="1"
-            android:text="TextView" />
+            android:layout_height="match_parent" />
 
 
     </LinearLayout>
-
-
 
 
     <RelativeLayout

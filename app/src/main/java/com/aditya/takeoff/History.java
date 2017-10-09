@@ -68,18 +68,22 @@ public class History extends AppCompatActivity {
             Toast.makeText(this, "There is nothing in this database!", Toast.LENGTH_SHORT).show();
         } else {
             while (data.moveToNext()){
-                job = new Job(data.getString(0), data.getString(1), data.getString(2), data.getString(3));
+                job = new Job(data.getString(0), data.getString(1), data.getString(2), data.getString(3), data.getString(4));
                 jobList.add(job);
             }
             LsAdapter adapter = new LsAdapter(this, R.layout.list_adapter_view, jobList);
             listView = (ListView) findViewById(R.id.listView);
             listView.setAdapter(adapter);
-//            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                }
-//            });
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Job selectedJob = (Job) parent.getItemAtPosition(position);
+                    String jobId = selectedJob.getId();
+                    Intent detail = new Intent(History.this, DetailView.class);
+                    detail.putExtra("com.aditya.takeoff.JOB_ID", jobId);
+                    startActivity(detail);
+                }
+            });
         }
     }
 }

@@ -46,7 +46,8 @@
         <activity android:name=".Checklist_screen" />
         <activity android:name=".Camera_screen" />
         <activity android:name=".Submission_form" />
-        <activity android:name=".History"></activity>
+        <activity android:name=".History" />
+        <activity android:name=".DetailView"></activity>
     </application>
 
 </manifest>

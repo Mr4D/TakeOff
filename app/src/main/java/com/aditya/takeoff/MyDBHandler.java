@@ -67,7 +67,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                     COLUMN_JOBS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT " + ", " +
                     COLUMN_JOBS_USERNAME + " TEXT " + ", " +
                     COLUMN_JOBS_TASKS_ID + " INTEGER " + ", " +
-                    COLUMN_JOBS_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP " + ", " +
+                    COLUMN_JOBS_TIMESTAMP + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')) " + ", " +
                     COLUMN_JOBS_LONGITUTE + " DECIMAL(12,9) " + ", " +
                     COLUMN_JOBS_LATITUDE + " DECIMAL(12,9) " + ", " +
                     COLUMN_JOBS_DESCRIPTION + " TEXT " + ", " +
@@ -91,7 +91,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
     public String[] getCheckList(String nfc_id) {
-        String[] checks = new String[11 ];
+        String[] checks = new String[11];
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_TASKS +
                             " WHERE " + COLUMN_TASKS_ID + " = " + nfc_id + ";";
@@ -128,77 +128,56 @@ public class MyDBHandler extends SQLiteOpenHelper{
     public Cursor getListContents() {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " +
-                TABLE_JOBS + "." + COLUMN_JOBS_USERNAME + " AS username, " +
-                TABLE_TASKS + "." + COLUMN_TASKS_PARTNAME + " AS task, " +
-                "DATE(" + TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + ") AS date, " +
-                "TIME(" + TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + ") AS time, " +
-                TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + " AS timestamp " +
-                "FROM " +
-                TABLE_JOBS +
-                " INNER JOIN " +
-                TABLE_TASKS +
-                " ON " + TABLE_TASKS + "." + COLUMN_TASKS_ID + " = " +  TABLE_JOBS + "." + COLUMN_JOBS_TASKS_ID +
-                " ORDER BY timestamp DESC";
+                            TABLE_JOBS + "." + COLUMN_JOBS_ID + " AS id, " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_USERNAME + " AS username, " +
+                            TABLE_TASKS + "." + COLUMN_TASKS_PARTNAME + " AS task, " +
+                            "DATE(" + TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + ") AS date, " +
+                            "TIME(" + TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + ") AS time, " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + " AS timestamp " +
+                        "FROM " +
+                            TABLE_JOBS +
+                        " INNER JOIN " +
+                            TABLE_TASKS +
+                            " ON " + TABLE_TASKS + "." + COLUMN_TASKS_ID + " = " +  TABLE_JOBS + "." + COLUMN_JOBS_TASKS_ID +
+                        " ORDER BY timestamp DESC";
         Cursor data = db.rawQuery(query, null);
         return data;
     }
 
-//    public Cursor getListContents() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_JOBS, null);
-//        return data;
-//    }
+    public Job getJobDetails(String selectedJobId) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_ID + " AS id, " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_USERNAME + " AS username, " +
+                            TABLE_TASKS + "." + COLUMN_TASKS_PARTNAME + " AS task, " +
+                            "DATE(" + TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + ") AS date, " +
+                            "TIME(" + TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + ") AS time, " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_LONGITUTE + " AS longitude, " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_LATITUDE + " AS latitude, " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_DESCRIPTION + " AS description, " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_ALERT + " AS alert, " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_IMAGEURI + " AS img_uri " +
+                        "FROM " +
+                            TABLE_JOBS +
+                        " INNER JOIN " +
+                            TABLE_TASKS +
+                            " ON " + TABLE_TASKS + "." + COLUMN_TASKS_ID + " = " +  TABLE_JOBS + "." + COLUMN_JOBS_TASKS_ID +
+                        " ORDER BY timestamp DESC";
+        Cursor jobDetails = db.rawQuery(query, null);
+        jobDetails.moveToFirst();
+        Job selectedJob = new Job(
+                jobDetails.getString(jobDetails.getColumnIndex("id")),
+                jobDetails.getString(jobDetails.getColumnIndex("username")),
+                jobDetails.getString(jobDetails.getColumnIndex("task")),
+                jobDetails.getString(jobDetails.getColumnIndex("date")),
+                jobDetails.getString(jobDetails.getColumnIndex("time")),
+                jobDetails.getString(jobDetails.getColumnIndex("longitude")),
+                jobDetails.getString(jobDetails.getColumnIndex("latitude")),
+                jobDetails.getString(jobDetails.getColumnIndex("description")),
+                jobDetails.getString(jobDetails.getColumnIndex("alert")),
+                jobDetails.getString(jobDetails.getColumnIndex("img_uri"))
+        );
+        return selectedJob;
+    }
 
-//    public String databaseToString() {
-//        String dbString = "";
-//        SQLiteDatabase db = getWritableDatabase();
-//        String query = "SELECT * FROM " + TABLE_JOBS + ";";
-//        Cursor c = db.rawQuery(query, null);
-//        c.moveToFirst();
-//        while(!c.isAfterLast()) {
-//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_ID));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_USERNAME));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_TASKS_ID));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_TIMESTAMP));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_LONGITUTE));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_LATITUDE));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_DESCRIPTION));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_ALERT));
-//            dbString += "\n";
-//            dbString += c.getString(c.getColumnIndex(COLUMN_JOBS_IMAGEURI));
-//            dbString += "\n";
-//            dbString += "\n";
-//            dbString += "\n";
-//            c.moveToNext();
-//        }
-//        db.close();
-//        return dbString;
-//    }
-
-//    public String getDateTime() {
-//        String dateStr = "";
-//        SQLiteDatabase db = getWritableDatabase();
-//        String query = "SELECT DATE(" + COLUMN_JOBS_TIMESTAMP + ") AS date, TIME(" + COLUMN_JOBS_TIMESTAMP +") AS time FROM " + TABLE_JOBS + ";";
-//        Cursor c = db.rawQuery(query, null);
-//        c.moveToFirst();
-//        while(!c.isAfterLast()) {
-//            dateStr += "Date: ";
-//            dateStr += c.getString(c.getColumnIndex("date"));
-//            dateStr += "\n";
-//            dateStr += "Time: ";
-//            dateStr += c.getString(c.getColumnIndex("time"));
-//            dateStr += "\n";
-//            dateStr += "\n";
-//            c.moveToNext();
-//        }
-//        db.close();
-//        return dateStr;
-//    }
 }

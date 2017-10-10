@@ -1,27 +1,40 @@
 package com.aditya.takeoff;
 
-import android.database.Cursor;
+import android.app.Dialog;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
-public class DetailView extends AppCompatActivity {
+import java.io.IOException;
+
+public class DetailView extends AppCompatActivity implements OnMapReadyCallback {
 
     TextView dbDump;
     MyDBHandler dbHandler;
     ImageView imgView;
+    GoogleMap mGoogleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_view);
+        if(googleServicesAvailable()){
+            Toast.makeText(this, "Connection with Play services established", Toast.LENGTH_LONG).show();
+            setContentView(R.layout.activity_detail_view);
+            initMap();
+        } else {
+            //No Google Maps Layout
+        }
 
         dbDump = (TextView) findViewById(R.id.dbDump);
         imgView = (ImageView) findViewById(R.id.imgView);
@@ -31,16 +44,40 @@ public class DetailView extends AppCompatActivity {
             String id = getIntent().getExtras().getString("com.aditya.takeoff.JOB_ID");
             Job viewJob = dbHandler.getJobDetails(id);
 
-            String pathName = viewJob.getImg_uri();
-
-            if(pathName!=null && pathName!="") {
-                File f = new File(pathName);
-                if(f.exists()) {
-                    Toast.makeText(this, "File exists!", Toast.LENGTH_SHORT).show();
-                    Drawable d = Drawable.createFromPath(pathName);
-                    imgView.setImageDrawable(d);
-                }
+            Uri pathName = Uri.parse(viewJob.getImg_uri());
+            dbDump.setText(pathName.toString());
+            dbDump.append("\n" + viewJob.getId());
+            try {
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pathName);
+                imgView.setImageBitmap(imageBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+
+    }
+
+    private void initMap(){
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapFragment);
+        mapFragment.getMapAsync(this);
+    }
+
+    public boolean googleServicesAvailable () {
+        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+        int isAvailable = api.isGooglePlayServicesAvailable(this);
+        if(isAvailable == ConnectionResult.SUCCESS) {
+            return true;
+        } else if (api.isUserResolvableError(isAvailable)){
+            Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
+            dialog.show();
+        } else {
+            Toast.makeText(this, "Can not connect to Play services", Toast.LENGTH_LONG).show();
+        }
+        return false;
+    }
+
+    public void onMapReady (GoogleMap googleMap){
+        mGoogleMap = googleMap;
     }
 }
+

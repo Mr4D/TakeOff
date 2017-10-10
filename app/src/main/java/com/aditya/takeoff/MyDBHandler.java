@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class MyDBHandler extends SQLiteOpenHelper{
 
@@ -162,7 +161,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
                         " INNER JOIN " +
                             TABLE_TASKS +
                             " ON " + TABLE_TASKS + "." + COLUMN_TASKS_ID + " = " +  TABLE_JOBS + "." + COLUMN_JOBS_TASKS_ID +
-                        " ORDER BY timestamp DESC";
+                        " WHERE " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_ID + " = " + selectedJobId;
         Cursor jobDetails = db.rawQuery(query, null);
         jobDetails.moveToFirst();
         Job selectedJob = new Job(
@@ -179,5 +179,4 @@ public class MyDBHandler extends SQLiteOpenHelper{
         );
         return selectedJob;
     }
-
 }

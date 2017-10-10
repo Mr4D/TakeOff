@@ -33,7 +33,7 @@ import java.util.Locale;
 
 public class DetailView extends AppCompatActivity implements OnMapReadyCallback {
 
-    TextView taskName, usernameTextView, dateTextView, timeTextView, descriptionTextView,alertTextView;
+    TextView taskName, usernameTextView, dateTextView, timeTextView, descriptionTextView,alertTextView, localityTextView;
     MyDBHandler dbHandler;
     ImageView imgView;
     GoogleMap mGoogleMap;
@@ -56,6 +56,7 @@ public class DetailView extends AppCompatActivity implements OnMapReadyCallback 
         timeTextView = (TextView) findViewById(R.id.timeTextView);
         descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
         alertTextView = (TextView) findViewById(R.id.alertTextView);
+        localityTextView = (TextView) findViewById(R.id.localityTextView);
 
         imgView = (ImageView) findViewById(R.id.imgView);
         dbHandler = new MyDBHandler(this, null, null, 1);
@@ -124,8 +125,11 @@ public class DetailView extends AppCompatActivity implements OnMapReadyCallback 
         mGoogleMap.moveCamera(update);
         Geocoder gcd = new Geocoder(this, Locale.getDefault());
         List<Address> addresses = gcd.getFromLocation(lattitude, longitude, 1);
-        String locality = addresses.get(0).getAddressLine(0);
-        MarkerOptions options = new MarkerOptions().title(locality).position(ll);
+        String address = addresses.get(0).getAddressLine(0);
+        String locality = addresses.get(0).getLocality();
+
+        localityTextView.setText(locality);
+        MarkerOptions options = new MarkerOptions().title(address).position(ll);
         mGoogleMap.addMarker(options);
     }
 

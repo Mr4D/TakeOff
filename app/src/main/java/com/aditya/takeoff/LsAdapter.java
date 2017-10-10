@@ -31,16 +31,16 @@ public class LsAdapter extends ArrayAdapter<Job> {
             TextView date = (TextView) convertView.findViewById(R.id.textDate);
             TextView time = (TextView) convertView.findViewById(R.id.textTime);
             if(username != null) {
-                username.setText(job.getUsername().toString());
+                username.setText(job.getUsername());
             }
             if(task != null) {
-                task.setText(job.getTask().toString());
+                task.setText(job.getTask());
             }
             if(date != null) {
-                date.setText(job.getDate().toString());
+                date.setText(job.getDate());
             }
             if(time != null) {
-                time.setText(job.getTime().toString());
+                time.setText(job.getTime());
             }
         }
         return convertView;

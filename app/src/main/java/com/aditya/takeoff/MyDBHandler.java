@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class MyDBHandler extends SQLiteOpenHelper{
 
@@ -67,8 +68,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
                     COLUMN_JOBS_USERNAME + " TEXT " + ", " +
                     COLUMN_JOBS_TASKS_ID + " INTEGER " + ", " +
                     COLUMN_JOBS_TIMESTAMP + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME')) " + ", " +
-                    COLUMN_JOBS_LONGITUTE + " DECIMAL(12,9) " + ", " +
-                    COLUMN_JOBS_LATITUDE + " DECIMAL(12,9) " + ", " +
+                    COLUMN_JOBS_LONGITUTE + " TEXT " + ", " +
+                    COLUMN_JOBS_LATITUDE + " TEXT " + ", " +
                     COLUMN_JOBS_DESCRIPTION + " TEXT " + ", " +
                     COLUMN_JOBS_ALERT + " TEXT " + ", " +
                     COLUMN_JOBS_IMAGEURI + " TEXT " + ", " +
@@ -110,7 +111,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return checks;
     }
 
-    public void submitJob(String username, String nfcId, double longitude, double latitude, String description, String alert, String imgUri) {
+    public void submitJob(String username, String nfcId, String longitude, String latitude, String description, String alert, String imgUri) {
         ContentValues job = new ContentValues();
         job.put(COLUMN_JOBS_USERNAME, username);
         job.put(COLUMN_JOBS_TASKS_ID, nfcId);
@@ -122,6 +123,8 @@ public class MyDBHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_JOBS, null, job);
         db.close();
+
+
     }
 
     public Cursor getListContents() {
@@ -138,7 +141,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                         " INNER JOIN " +
                             TABLE_TASKS +
                             " ON " + TABLE_TASKS + "." + COLUMN_TASKS_ID + " = " +  TABLE_JOBS + "." + COLUMN_JOBS_TASKS_ID +
-                        " ORDER BY timestamp DESC";
+                        " ORDER BY timestamp DESC;";
         Cursor data = db.rawQuery(query, null);
         return data;
     }
@@ -178,5 +181,14 @@ public class MyDBHandler extends SQLiteOpenHelper{
                 jobDetails.getString(jobDetails.getColumnIndex("img_uri"))
         );
         return selectedJob;
+    }
+
+    public void getLoc() {
+        String query = "SELECT longitude, latitude FROM jobs;";
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor loc = db.rawQuery(query, null);
+        loc.moveToFirst();
+        String res = loc.getString(loc.getColumnIndex("longitude")) + ", " + loc.getString(loc.getColumnIndex("latitude"));
+        Log.d("posDebug", res);
     }
 }

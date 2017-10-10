@@ -2,6 +2,7 @@ package com.aditya.takeoff;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -112,6 +113,11 @@ public class Camera_screen extends AppCompatActivity {
             this.sendBroadcast(mediaScanIntent);
             try {
                 Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri);
+                if (imageBitmap.getWidth() > imageBitmap.getHeight()) {
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(90);
+                    imageBitmap = Bitmap.createBitmap(imageBitmap , 0, 0, imageBitmap.getWidth(), imageBitmap.getHeight(), matrix, true);
+                }
                 imageDisp.setImageBitmap(imageBitmap);
             }
             catch (IOException e) {

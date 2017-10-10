@@ -13,6 +13,7 @@ public class TakeOff extends AppCompatActivity {
     Button loginBtn;
     EditText usernameText;
     EditText passwordText;
+    MyDBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class TakeOff extends AppCompatActivity {
         loginBtn = (Button)findViewById(R.id.btLogin);
         usernameText = (EditText)findViewById(R.id.username);
         passwordText = (EditText)findViewById(R.id.password);
+        dbHandler = new MyDBHandler(this, null, null, 1);
     }
 
     public void login(View view) {

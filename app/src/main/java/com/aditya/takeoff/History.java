@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +38,6 @@ public class History extends AppCompatActivity {
             userPasson = getIntent().getExtras().getString("com.aditya.takeoff.USER_ID");
             usernameTextView.setText(userPasson);
         }
-
         // Navigation bar styling and activity managing
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
@@ -60,11 +60,9 @@ public class History extends AppCompatActivity {
                 return false;
             }
         });
-
         jobList = new ArrayList<>();
         Cursor data = dbHandler.getListContents();
-        int numRows = data.getCount();
-        if(numRows == 0){
+        if(!((data != null) && (data.getCount() > 0))){
             Toast.makeText(this, "There is nothing in this database!", Toast.LENGTH_SHORT).show();
         } else {
             while (data.moveToNext()){

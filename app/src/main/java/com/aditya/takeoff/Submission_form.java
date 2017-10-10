@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -96,8 +97,8 @@ public class Submission_form extends AppCompatActivity {
                     if (location != null) {
                         longitude = location.getLongitude();
                         latitude = location.getLatitude();
-                        String locationMsg = "Latitude: " + latitude + "\n " + "Longitude: " + longitude;
-                        locationTextView.setText(locationMsg);
+//                        String locationMsg = "Latitude: " + latitude + "\n " + "Longitude: " + longitude;     // Dogfood
+//                        locationTextView.setText(locationMsg);                                                // Dogfood
                     }
                 }
             });
@@ -108,11 +109,17 @@ public class Submission_form extends AppCompatActivity {
        // Get all data and store in database
         description = descriptionBox.getText().toString();
         alert = alertBox.getText().toString();
-        dbHandler.submitJob(userPasson, NFC_ID, longitude, latitude, description, alert, imgUri);
+
+        String strLong = String.valueOf(longitude);
+        String strLat = String.valueOf(latitude);
+
+        Log.d("posDebug", strLat);
+        Log.d("posDebug", strLong);
+
+        dbHandler.submitJob(userPasson, NFC_ID, strLong, strLat, description, alert, imgUri);
         Intent back = new Intent(getApplicationContext(), main.class);
         back.putExtra("com.aditya.takeoff.USER_ID", userPasson);
         back.putExtra("com.aditya.takeoff.BACK", "Returned");
         startActivity(back);
-        finish();
     }
 }

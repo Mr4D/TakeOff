@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class LsAdapter extends ArrayAdapter<Job> {
+    // Code from Mitch Tabian's project (mitchtabian on GitHub), source code available at https://github.com/mitchtabian/ListAdapter and https://github.com/mitchtabian/ListViews
     private LayoutInflater mInflater;
     private ArrayList<Job> jobs;
     private int mViewResourceId;

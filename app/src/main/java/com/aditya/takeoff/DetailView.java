@@ -38,11 +38,14 @@ import java.util.Locale;
 
 public class DetailView extends AppCompatActivity implements OnMapReadyCallback {
 
+    // All google maps code based on code from video tutorial by Vivian Aranha available at https://www.youtube.com/watch?v=lchyOhPREh4
+
     TextView taskName, usernameTextView, dateTextView, timeTextView, descriptionTextView,alertTextView, localityTextView;
     MyDBHandler dbHandler;
     ImageView imgView;
     GoogleMap mGoogleMap;
     Job viewJob;
+    String userPasson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,10 @@ public class DetailView extends AppCompatActivity implements OnMapReadyCallback 
         imgView = (ImageView) findViewById(R.id.imgView);
         dbHandler = new MyDBHandler(this, null, null, 1);
 
+        if(getIntent().hasExtra("com.aditya.takeoff.USER_ID")) {
+            userPasson = getIntent().getExtras().getString("com.aditya.takeoff.USER_ID");
+        }
+
         if(getIntent().hasExtra("com.aditya.takeoff.JOB_ID")) {
             String id = getIntent().getExtras().getString("com.aditya.takeoff.JOB_ID");
             viewJob = dbHandler.getJobDetails(id);
@@ -82,6 +89,7 @@ public class DetailView extends AppCompatActivity implements OnMapReadyCallback 
                 Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pathName);
 
                 if (imageBitmap.getWidth() > imageBitmap.getHeight()) {
+                    // Rotate image due to phone method of image storing: https://stackoverflow.com/questions/6069122/camera-orientation-issue-in-android
                     Matrix matrix = new Matrix();
                     matrix.postRotate(90);
                     imageBitmap = Bitmap.createBitmap(imageBitmap , 0, 0, imageBitmap.getWidth(), imageBitmap.getHeight(), matrix, true);
@@ -95,11 +103,13 @@ public class DetailView extends AppCompatActivity implements OnMapReadyCallback 
     }
 
     private void initMap() {
+        // From video tutorial by Vivian Aranha available at https://www.youtube.com/watch?v=lchyOhPREh4
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
     }
 
     public boolean googleServicesAvailable () {
+        // From video tutorial by Vivian Aranha available at https://www.youtube.com/watch?v=lchyOhPREh4
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
         int isAvailable = api.isGooglePlayServicesAvailable(this);
         if(isAvailable == ConnectionResult.SUCCESS) {
@@ -116,6 +126,7 @@ public class DetailView extends AppCompatActivity implements OnMapReadyCallback 
     }
 
     public void onMapReady (GoogleMap googleMap) {
+        // From video tutorial by Vivian Aranha available at https://www.youtube.com/watch?v=lchyOhPREh4
         mGoogleMap = googleMap;
         try {
             goToLocationZoom(Double.parseDouble(viewJob.getLongitude()), Double.parseDouble(viewJob.getLatitude()), 15);
@@ -125,6 +136,7 @@ public class DetailView extends AppCompatActivity implements OnMapReadyCallback 
     }
 
     private void goToLocationZoom(double longitude, double lattitude, float zoom) throws IOException {
+        // From video tutorial by Vivian Aranha available at https://www.youtube.com/watch?v=lchyOhPREh4
         LatLng ll = new LatLng(lattitude, longitude);
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, zoom);
         mGoogleMap.moveCamera(update);
@@ -140,6 +152,7 @@ public class DetailView extends AppCompatActivity implements OnMapReadyCallback 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // code based on video tutorial from Coding Demos and video turorial from PRABEESH R K, source code available at https://www.youtube.com/watch?v=EZ-sNN7UWFU&t=418s and https://www.youtube.com/watch?v=IyPemIJDerw&t=680s
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.update_detail_menu, menu);
         return true;
@@ -147,10 +160,12 @@ public class DetailView extends AppCompatActivity implements OnMapReadyCallback 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // code based on video tutorial from Coding Demos and video turorial from PRABEESH R K, source code available at https://www.youtube.com/watch?v=EZ-sNN7UWFU&t=418s and https://www.youtube.com/watch?v=IyPemIJDerw&t=680s
         if(item.getItemId() == R.id.edit) {
             // Go to edit screen, pass on the job ID
             Intent editScreen = new Intent(DetailView.this, EditScreen.class);
             editScreen.putExtra("com.aditya.takeoff.JOB_ID", viewJob.getId());
+            editScreen.putExtra("com.aditya.takeoff.USER_ID", userPasson);
             startActivity(editScreen);
 
         }

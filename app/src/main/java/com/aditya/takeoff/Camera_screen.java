@@ -26,6 +26,8 @@ import java.util.Date;
 
 public class Camera_screen extends AppCompatActivity {
 
+    //code based on project found at https://github.com/anandautam1/SecurifyBetaAndroid
+
     private static final int CAMERA_REQUEST_CODE = 1313;
 
     //Permission request codes for functions
@@ -114,6 +116,7 @@ public class Camera_screen extends AppCompatActivity {
             try {
                 Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri);
                 if (imageBitmap.getWidth() > imageBitmap.getHeight()) {
+                    // Rotate image due to phone method of image storing: https://stackoverflow.com/questions/6069122/camera-orientation-issue-in-android
                     Matrix matrix = new Matrix();
                     matrix.postRotate(90);
                     imageBitmap = Bitmap.createBitmap(imageBitmap , 0, 0, imageBitmap.getWidth(), imageBitmap.getHeight(), matrix, true);

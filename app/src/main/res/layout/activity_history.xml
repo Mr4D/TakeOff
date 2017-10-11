@@ -38,6 +38,7 @@
         android:layout_height="50dp"
         android:id="@+id/bottomBar"
         android:layout_alignParentBottom="true">
+        <!--Code from Mitch Tabian available at https://github.com/mitchtabian/AppBarLayouts-->
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_width="match_parent"

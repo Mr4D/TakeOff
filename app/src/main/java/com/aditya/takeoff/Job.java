@@ -1,6 +1,8 @@
 package com.aditya.takeoff;
 
 public class Job {
+
+    // Code based on Mitch Tabian's project (mitchtabian on GitHub), source code available at https://github.com/mitchtabian/ListAdapter
     private String id;
     private String username;
     private String task;

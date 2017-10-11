@@ -39,6 +39,7 @@ public class main extends AppCompatActivity {
             Toast.makeText(this, "Your submission has been recorded.", Toast.LENGTH_SHORT).show();
         }
         // Navigation bar styling and activity managing
+        // Code from Mitch Tabian, source code available at https://github.com/mitchtabian/AppBarLayouts
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
@@ -60,7 +61,9 @@ public class main extends AppCompatActivity {
                 return false;
             }
         });
+
         // NFC set up
+        // Code from NFC Tutorials on, source code available at https://drive.google.com/file/d/0B1FdpGsxG5wvcUxSbFZ2cUVVVWs/view
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (!(nfcAdapter != null && nfcAdapter.isEnabled())) {
             Toast.makeText(this, "Please turn on NFC from settings and launch the application again!", Toast.LENGTH_SHORT).show();
@@ -71,6 +74,7 @@ public class main extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        // Code from NFC Tutorials on, source code available at https://drive.google.com/file/d/0B1FdpGsxG5wvcUxSbFZ2cUVVVWs/view
         if (intent.hasExtra(NfcAdapter.EXTRA_TAG)) {
             Parcelable[] parcelable = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             if (parcelable != null && parcelable.length > 0) {
@@ -83,6 +87,7 @@ public class main extends AppCompatActivity {
     }
 
     private void readTextFromMessage(NdefMessage ndefMessage) {
+        // Code from NFC Tutorials on, source code available at https://drive.google.com/file/d/0B1FdpGsxG5wvcUxSbFZ2cUVVVWs/view
         NdefRecord[] ndefRecords = ndefMessage.getRecords();
         if (ndefRecords != null && ndefRecords.length > 0) {
             NdefRecord ndefRecord = ndefRecords[0];
@@ -100,17 +105,20 @@ public class main extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        // Code from NFC Tutorials on, source code available at https://drive.google.com/file/d/0B1FdpGsxG5wvcUxSbFZ2cUVVVWs/view
         super.onResume();
         enableForegroundDispatchSystem();
     }
 
     @Override
     protected void onPause() {
+        // Code from NFC Tutorials on, source code available at https://drive.google.com/file/d/0B1FdpGsxG5wvcUxSbFZ2cUVVVWs/view
         super.onPause();
         disableForegroundDispatchSystem();
     }
 
     private void enableForegroundDispatchSystem() {
+        // Code from NFC Tutorials on, source code available at https://drive.google.com/file/d/0B1FdpGsxG5wvcUxSbFZ2cUVVVWs/view
         Intent intent = new Intent(this, main.class).addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         IntentFilter[] intentilter = new IntentFilter[]{};
@@ -118,10 +126,12 @@ public class main extends AppCompatActivity {
     }
 
     private void disableForegroundDispatchSystem() {
+        // Code from NFC Tutorials on, source code available at https://drive.google.com/file/d/0B1FdpGsxG5wvcUxSbFZ2cUVVVWs/view
         nfcAdapter.disableForegroundDispatch(this);
     }
 
     public String getTextFromNdefRecord(NdefRecord ndefRecord) {
+        // Code from NFC Tutorials on, source code available at https://drive.google.com/file/d/0B1FdpGsxG5wvcUxSbFZ2cUVVVWs/view
         String tagContent = null;
         try {
             byte[] payload = ndefRecord.getPayload();
@@ -133,14 +143,5 @@ public class main extends AppCompatActivity {
             Log.e("getTextFromNdefRecord", e.getMessage(), e);
         }
         return tagContent;
-    }
-
-    public void continueClick(View view) {
-        String NFC_ID = "2";
-        String username = usernameTextView.getText().toString();
-        Intent checklistIntent = new Intent(this, Checklist_screen.class);
-        checklistIntent.putExtra("com.aditya.takeoff.USER_ID", username);
-        checklistIntent.putExtra("com.aditya.takeoff.NFC_ID", NFC_ID);
-        startActivity(checklistIntent);
     }
 }

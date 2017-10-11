@@ -7,8 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class MyDBHandler extends SQLiteOpenHelper{
+// All database code from buckyroberts on github, source code available at https://github.com/buckyroberts/Source-Code-from-Tutorials/blob/master/Android_Beginners/049-054%20SQLite/49%20to%2054%20SQLite.txt
 
+public class MyDBHandler extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "takeoff.db";
 
@@ -126,6 +127,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
     public Cursor getListContents(Boolean order) {
+        // Code from Mitch Tabian (mitchtabian on GitHub), source code available at https://github.com/mitchtabian/ListAdapter
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " +
                             TABLE_JOBS + "." + COLUMN_JOBS_ID + " AS id, " +
@@ -154,6 +156,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
     }
 
     public Job getJobDetails(String selectedJobId) {
+        // Code from Mitch Tabian (mitchtabian on GitHub), source code available at https://github.com/mitchtabian/ListAdapter
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT " +
                             TABLE_JOBS + "." + COLUMN_JOBS_ID + " AS id, " +

@@ -44,6 +44,7 @@
         android:layout_height="50dp"
         android:id="@+id/bottomBar"
         android:layout_alignParentBottom="true">
+        <!--Code from Mitch Tabian available at https://github.com/mitchtabian/AppBarLayouts-->
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_width="match_parent"
@@ -52,13 +53,4 @@
             android:background="@color/navGrey"
             app:menu="@menu/bottom_navigation_menu" />
     </RelativeLayout>
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/partName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="132dp"
-        android:onClick="continueClick"
-        android:text="Button" />
 </RelativeLayout>

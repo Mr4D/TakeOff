@@ -15,11 +15,17 @@ public class EditScreen extends AppCompatActivity {
     MyDBHandler dbHandler;
     String id;
 
+    String userPasson;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_screen);
         dbHandler = new MyDBHandler(this, null, null, 1);
+
+        if(getIntent().hasExtra("com.aditya.takeoff.USER_ID")) {
+            userPasson = getIntent().getExtras().getString("com.aditya.takeoff.USER_ID");
+        }
 
         if(getIntent().hasExtra("com.aditya.takeoff.JOB_ID")) {
             id = getIntent().getExtras().getString("com.aditya.takeoff.JOB_ID");
@@ -39,12 +45,14 @@ public class EditScreen extends AppCompatActivity {
         if(description != null && !description.isEmpty()) {
             dbHandler.updateDescription(id, description);
             Intent gackToHistory = new Intent(EditScreen.this, History.class);
+            gackToHistory.putExtra("com.aditya.takeoff.USER_ID", userPasson);
             startActivity(gackToHistory);
         }
         String alert = updateAlert.getText().toString();
         if(alert != null && !alert.isEmpty()) {
             dbHandler.updateAlert(id, alert);
             Intent gackToHistory = new Intent(EditScreen.this, History.class);
+            gackToHistory.putExtra("com.aditya.takeoff.USER_ID", userPasson);
             startActivity(gackToHistory);
         }
         if (!(description != null && !description.isEmpty()) && !(alert != null && !alert.isEmpty())) {

@@ -2,13 +2,10 @@ package com.aditya.takeoff;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class History extends AppCompatActivity {
+    // Code from Mitch Tabian's project (mitchtabian on GitHub), source code available at https://github.com/mitchtabian/ListAdapter and https://github.com/mitchtabian/ListViews
     MyDBHandler dbHandler;
     TextView usernameTextView;
     String userPasson;
@@ -63,7 +61,6 @@ public class History extends AppCompatActivity {
                 return false;
             }
         });
-
         setListView(false);
     }
 
@@ -87,6 +84,7 @@ public class History extends AppCompatActivity {
                     String jobId = selectedJob.getId();
                     Intent detail = new Intent(History.this, DetailView.class);
                     detail.putExtra("com.aditya.takeoff.JOB_ID", jobId);
+                    detail.putExtra("com.aditya.takeoff.USER_ID", userPasson);
                     startActivity(detail);
                 }
             });
@@ -95,6 +93,7 @@ public class History extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // code based on video tutorial from Coding Demos and video turorial from PRABEESH R K, source code available at https://www.youtube.com/watch?v=EZ-sNN7UWFU&t=418s and https://www.youtube.com/watch?v=IyPemIJDerw&t=680s
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.sort_history_menu, menu);
         return true;
@@ -102,6 +101,7 @@ public class History extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // code based on video tutorial from Coding Demos and video turorial from PRABEESH R K, source code available at https://www.youtube.com/watch?v=EZ-sNN7UWFU&t=418s and https://www.youtube.com/watch?v=IyPemIJDerw&t=680s
         if(item.getItemId() == R.id.new_old) {
             Toast.makeText(this, "Newset to oldest", Toast.LENGTH_LONG).show();
             setListView(false);

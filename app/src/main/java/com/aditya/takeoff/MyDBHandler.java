@@ -123,11 +123,9 @@ public class MyDBHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_JOBS, null, job);
         db.close();
-
-
     }
 
-    public Cursor getListContents() {
+    public Cursor getListContents(Boolean order) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " +
                             TABLE_JOBS + "." + COLUMN_JOBS_ID + " AS id, " +
@@ -140,8 +138,16 @@ public class MyDBHandler extends SQLiteOpenHelper{
                             TABLE_JOBS +
                         " INNER JOIN " +
                             TABLE_TASKS +
-                            " ON " + TABLE_TASKS + "." + COLUMN_TASKS_ID + " = " +  TABLE_JOBS + "." + COLUMN_JOBS_TASKS_ID +
-                        " ORDER BY timestamp DESC;";
+                            " ON " + TABLE_TASKS + "." + COLUMN_TASKS_ID + " = " +  TABLE_JOBS + "." + COLUMN_JOBS_TASKS_ID;
+        if (!order){
+            query += " ORDER BY timestamp DESC;";
+        }
+        else {
+            query += " ORDER BY timestamp ASC;";
+        }
+
+
+
         Cursor data = db.rawQuery(query, null);
         return data;
     }
@@ -183,12 +189,13 @@ public class MyDBHandler extends SQLiteOpenHelper{
         return selectedJob;
     }
 
-    public void getLoc() {
-        String query = "SELECT longitude, latitude FROM jobs;";
-        SQLiteDatabase db = getWritableDatabase();
-        Cursor loc = db.rawQuery(query, null);
-        loc.moveToFirst();
-        String res = loc.getString(loc.getColumnIndex("longitude")) + ", " + loc.getString(loc.getColumnIndex("latitude"));
-        Log.d("posDebug", res);
-    }
+//    public void getLoc() {
+//        String query = "SELECT longitude, latitude FROM jobs;";
+//        SQLiteDatabase db = getWritableDatabase();
+//        Cursor loc = db.rawQuery(query, null);
+//        loc.moveToFirst();
+//        String res = loc.getString(loc.getColumnIndex("longitude")) + ", " + loc.getString(loc.getColumnIndex("latitude"));
+//        Log.d("posDebug", res);
+//    }
+
 }

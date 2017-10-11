@@ -2,12 +2,15 @@ package com.aditya.takeoff;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -60,8 +63,13 @@ public class History extends AppCompatActivity {
                 return false;
             }
         });
+
+        setListView(false);
+    }
+
+    public void setListView(Boolean order) {
         jobList = new ArrayList<>();
-        Cursor data = dbHandler.getListContents();
+        Cursor data = dbHandler.getListContents(order);
         if(!((data != null) && (data.getCount() > 0))){
             Toast.makeText(this, "There is nothing in this database!", Toast.LENGTH_SHORT).show();
         } else {
@@ -82,6 +90,32 @@ public class History extends AppCompatActivity {
                     startActivity(detail);
                 }
             });
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sort_history_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.new_old) {
+            Toast.makeText(this, "Newset to oldest", Toast.LENGTH_LONG).show();
+            setListView(false);
+            return false;
+        }
+        else if (item.getItemId() == R.id.old_new) {
+            Toast.makeText(this, "Oldest to newest", Toast.LENGTH_LONG).show();
+            setListView(true);
+            return true;
+        }
+        else {
+            Toast.makeText(this, "Nothing selected, try again.", Toast.LENGTH_LONG).show();
+            setListView(true);
+            return true;
         }
     }
 }

@@ -31,12 +31,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
                         <TextView
                             android:id="@+id/textView10"
                             android:layout_width="wrap_content"
@@ -44,7 +42,6 @@
                             android:padding="5dp"
                             android:text="Username: "
                             android:textStyle="bold" />
-
                         <TextView
                             android:id="@+id/usernameTextView"
                             android:layout_width="match_parent"
@@ -52,7 +49,6 @@
                             android:padding="5dp"
                             android:text="username" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -65,21 +61,17 @@
                             android:padding="5dp"
                             android:text="Date: "
                             android:textStyle="bold" />
-
                         <TextView
                             android:id="@+id/dateTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
                             android:text="date" />
-
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
-
                         <TextView
                             android:id="@+id/textView9"
                             android:layout_width="wrap_content"
@@ -87,7 +79,6 @@
                             android:padding="5dp"
                             android:text="Time: "
                             android:textStyle="bold" />
-
                         <TextView
                             android:id="@+id/timeTextView"
                             android:layout_width="match_parent"
@@ -95,7 +86,6 @@
                             android:padding="5dp"
                             android:text="time" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -116,21 +106,18 @@
                             android:padding="5dp"
                             android:text="locality" />
                     </LinearLayout>
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:text="Alerts:"
                         android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/alertTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:text="ater sentence" />
-
                     <TextView
                         android:id="@+id/textView11"
                         android:layout_width="match_parent"
@@ -138,7 +125,6 @@
                         android:padding="5dp"
                         android:text="Description:"
                         android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/descriptionTextView"
                         android:layout_width="match_parent"

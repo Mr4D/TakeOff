@@ -133,6 +133,7 @@ public class MyDBHandler extends SQLiteOpenHelper{
                             TABLE_TASKS + "." + COLUMN_TASKS_PARTNAME + " AS task, " +
                             "DATE(" + TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + ") AS date, " +
                             "TIME(" + TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + ") AS time, " +
+                            TABLE_JOBS + "." + COLUMN_JOBS_ALERT + " AS alert, " +
                             TABLE_JOBS + "." + COLUMN_JOBS_TIMESTAMP + " AS timestamp " +
                         "FROM " +
                             TABLE_JOBS +
@@ -188,14 +189,19 @@ public class MyDBHandler extends SQLiteOpenHelper{
         );
         return selectedJob;
     }
-
-//    public void getLoc() {
-//        String query = "SELECT longitude, latitude FROM jobs;";
-//        SQLiteDatabase db = getWritableDatabase();
-//        Cursor loc = db.rawQuery(query, null);
-//        loc.moveToFirst();
-//        String res = loc.getString(loc.getColumnIndex("longitude")) + ", " + loc.getString(loc.getColumnIndex("latitude"));
-//        Log.d("posDebug", res);
-//    }
-
+    public void deleteJob(String id) {
+        String query = "DELETE FROM " + TABLE_JOBS + " WHERE " + TABLE_JOBS + "." + COLUMN_JOBS_ID + " = " + id + ";";
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+    }
+    public void updateDescription(String id, String description) {
+        String query = "UPDATE " + TABLE_JOBS + " SET " + COLUMN_JOBS_DESCRIPTION  + " = \"" + description + "\" WHERE " + COLUMN_JOBS_ID + " = " + id + ";";
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+    }
+    public void updateAlert(String id, String alert) {
+        String query = "UPDATE " + TABLE_JOBS + " SET " + COLUMN_JOBS_ALERT  + " = \"" + alert + "\" WHERE " + COLUMN_JOBS_ID + " = " + id + ";";
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+    }
 }

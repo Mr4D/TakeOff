@@ -74,7 +74,7 @@ public class History extends AppCompatActivity {
             Toast.makeText(this, "There is nothing in this database!", Toast.LENGTH_SHORT).show();
         } else {
             while (data.moveToNext()){
-                job = new Job(data.getString(0), data.getString(1), data.getString(2), data.getString(3), data.getString(4));
+                job = new Job(data.getString(0), data.getString(1), data.getString(2), data.getString(3), data.getString(4), data.getString(5));
                 jobList.add(job);
             }
             LsAdapter adapter = new LsAdapter(this, R.layout.list_adapter_view, jobList);

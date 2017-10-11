@@ -13,12 +13,13 @@ public class Job {
     private String img_uri;
 
 
-    public Job(String cId, String cUsername, String cTask, String cDate, String cTime) {
+    public Job(String cId, String cUsername, String cTask, String cDate, String cTime, String cAlert) {
         id = cId;
         username = cUsername;
         task = cTask;
         date = cDate;
         time = cTime;
+        alert = cAlert;
     }
     public Job(String cId, String cUsername, String cTask, String cDate, String cTime, String cLongitude, String cLatitude, String cDescription, String cAlert, String cImg_uri) {
         id = cId;
